@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import RestaurantService from '../../services/restaurant-service'
 
 
-
-export default class DashboardRoute extends Component {
+export default class RestaurantCreation extends Component {
   state = {
     info: {}
   }
@@ -19,11 +18,11 @@ export default class DashboardRoute extends Component {
   
   render() {
     return (
-      <section>
+      <section classname='box'>
        
-        
+        Create
 
-        Sucsess
+        
       </section>
     );
   }

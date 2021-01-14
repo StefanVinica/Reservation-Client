@@ -6,8 +6,8 @@ import PublicOnlyRoute from '../PublicOnlyRoute/PublicOnlyRoute'
 import RegistrationRoute from '../../routes/RegistrationRoute/RegistrationRoute'
 import LoginRoute from '../../routes/LoginRoute/LoginRoute'
 import DashboardRoute from '../../routes/DashboardRoute/DashboardRoute'
-import LearningRoute from '../../routes/LearningRoute/LearningRoute'
 import NotFoundRoute from '../../routes/NotFoundRoute/NotFoundRoute'
+import RestaurantCreation from '../../routes/RestaurantCreation/RestaurantCreation'
 import './App.css'
 
 export default class App extends Component {
@@ -32,6 +32,10 @@ export default class App extends Component {
               exact
               path={'/'}
               component={DashboardRoute}
+            />
+            <PrivateRoute 
+              path={'/create'}
+              component={RestaurantCreation}
             />
             <PublicOnlyRoute
               path={'/register'}
