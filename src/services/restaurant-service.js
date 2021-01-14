@@ -15,6 +15,20 @@ const RestaurantService = {
               ? res.json().then(e => Promise.reject(e))
               : res.json()
         )
+    },
+    getType(){
+        return fetch(`${config.API_ENDPOINT}/info/type`,{
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${TokenService.getAuthToken()}`,
+            }
+        })
+        .then(res =>
+            (!res.ok)
+              ? res.json().then(e => Promise.reject(e))
+              : res.json()
+        )
     }
 }
 
