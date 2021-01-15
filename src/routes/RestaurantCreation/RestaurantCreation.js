@@ -8,7 +8,8 @@ export default class RestaurantCreation extends Component {
     types : [],
     name : '',
     adress: '',
-    phone: ''
+    phone: '',
+    type:1
   }
 
   componentDidMount() {
@@ -41,8 +42,19 @@ export default class RestaurantCreation extends Component {
             phone: event.target.value
         })
     }
+    handleTypeChange = event =>{
+        this.setState({
+            type: event.target.value
+        })
+    }
 
-    handleSubmit = event => {}
+    handleSubmit = event => {
+        event.preventDefault()
+        let r_id = parseInt(this.state.info.id)
+        let ntype = parseInt(this.state.type)
+        RestaurantService.updateRestaurant(this.state.name,this.state.adress,this.state.phone,ntype,r_id)
+        .then(this.props.history.push('/'))
+    }
   
 
   render() {
@@ -63,7 +75,7 @@ export default class RestaurantCreation extends Component {
             <label>
                 Name:
                 <input 
-                placeholder='Enter Name'
+                placeholder={this.state.info.r_name}
                 value={this.state.name}
                 onChange={this.handleNameChange} 
                 type="text" 
@@ -76,7 +88,7 @@ export default class RestaurantCreation extends Component {
             <label>
                 Adress:
                 <input 
-                placeholder='Enter Adress'
+                placeholder={this.state.info.r_adress}
                 value={this.state.adress}
                 onChange={this.handleAdressChange} 
                 type="text" 
@@ -89,7 +101,7 @@ export default class RestaurantCreation extends Component {
             <label>
                 Phone Number:
                 <input 
-                placeholder='Enter Phone Number'
+                placeholder={this.state.info.r_phone}
                 value={this.state.phone}
                 onChange={this.handlePhoneChange} 
                 type="text" 
@@ -99,10 +111,14 @@ export default class RestaurantCreation extends Component {
                 </label>
         </div>
          
-            <div className='boxbody'><label>Select Type</label></div>
-                <select name='type' className="select-type"> 
-                    {options}
-                </select>
+        <div className='boxbody'><label>Select Type</label></div>
+            <select name='type' className="select-type" onChange={this.handleTypeChange}> 
+                 {options}
+            </select>
+
+        <div className='boxfooter'>
+            <button className='btn' type='submit'>Submit</button>
+        </div>
 
     </form>
         

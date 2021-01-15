@@ -19,13 +19,13 @@ export default class DashboardRoute extends Component {
   
   render() {
     return (
-      <section>
-       
+      <section className='boxbody'>
+       <div className='boxheader'>
+         <h2>{this.state.info.r_name}</h2>
+       </div>
         
-
-        Sucsess
       </section>
-    );
+    )
   }
 }
 
