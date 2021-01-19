@@ -5,6 +5,7 @@ import AuthApiService from '../../services/auth-api-service'
 import Button from '../Button/Button'
 import UserContext from "../../contexts/UserContext"
 import './RegistrationForm.css'
+import Select from '../Select/Select'
 
 class RegistrationForm extends Component {
   static contextType = UserContext
@@ -35,16 +36,17 @@ class RegistrationForm extends Component {
   }
 
   handleSubmit = (ev) => {
-      console.log("submit")
+     
       this.setState({
           loading: true,
       })
       ev.preventDefault()
-      const { name, username, password } = ev.target
+      const { name, username, password, user_type } = ev.target
       AuthApiService.postUser({
           name: name.value,
           username: username.value,
           password: password.value,
+          user_type: user_type.value
       })
           .then((user) => {
               console.log(user)
@@ -113,6 +115,14 @@ class RegistrationForm extends Component {
                       name='password'
                       type='password'
                       required
+                  />
+              </div>
+              <div className=''>
+                  <Label htmlFor='user-type'>
+                      Choose a user Type
+                      <Required />
+                  </Label>
+                  <Select
                   />
               </div>
               {this.handleLoadingState()}

@@ -52,6 +52,7 @@ export default class RestaurantCreation extends Component {
         event.preventDefault()
         let r_id = parseInt(this.state.info.id)
         let ntype = parseInt(this.state.type)
+        
         RestaurantService.updateRestaurant(this.state.name,this.state.adress,this.state.phone,ntype,r_id)
         .then(this.props.history.push('/'))
     }

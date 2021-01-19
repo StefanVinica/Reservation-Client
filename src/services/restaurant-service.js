@@ -45,6 +45,18 @@ const RestaurantService = {
             }),
         })
     },
+    insertTable(table_size,r_id){
+        return fetch(`${config.API_ENDPOINT}/table/${r_id}`,{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${TokenService.getAuthToken()}`,
+            },
+            body: JSON.stringify({
+                table_size
+            }),
+        })
+    },
 }
 
 export default RestaurantService
