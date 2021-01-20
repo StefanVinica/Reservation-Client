@@ -8,6 +8,8 @@ import LoginRoute from '../../routes/LoginRoute/LoginRoute'
 import DashboardRoute from '../../routes/DashboardRoute/DashboardRoute'
 import NotFoundRoute from '../../routes/NotFoundRoute/NotFoundRoute'
 import RestaurantCreation from '../../routes/RestaurantCreation/RestaurantCreation'
+import Redirect from '../../routes/Redirect'
+import UserDashboard from '../../routes/UserDashboardRoute/UserDashboard'
 import './App.css'
 
 export default class App extends Component {
@@ -32,6 +34,14 @@ export default class App extends Component {
               exact
               path={'/'}
               component={DashboardRoute}
+            />
+            <PrivateRoute
+              path={'/redirect'}
+              component={Redirect}
+            />
+            <PrivateRoute
+              path={'/userDashboard'}
+              component={UserDashboard}
             />
             <PrivateRoute 
               path={'/create'}

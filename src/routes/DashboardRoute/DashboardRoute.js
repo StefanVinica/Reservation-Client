@@ -6,14 +6,26 @@ import RestaurantService from '../../services/restaurant-service'
 export default class DashboardRoute extends Component {
   state = {
     info: {},
-    table_size: 0
+    table_size: 0,
+    tables: [],
+    r_id: 0
   }
 
   componentDidMount() {
     RestaurantService.getInfo()
     .then(info => {
       this.setState({
-        info: info
+        info: info,
+        r_id: info.id
+      })
+    })
+  }
+
+  getTables = () => {
+     RestaurantService.getTable(parseInt(this.state.info.id))
+    .then(tables => {
+      this.setState({
+        tables
       })
     })
   }
@@ -28,11 +40,15 @@ export default class DashboardRoute extends Component {
     event.preventDefault()
     let r_id = parseInt(this.state.info.id)
     let table_size = parseInt(this.state.table_size)
-    
+
     RestaurantService.insertTable(table_size,r_id)
   }
   
   render() {
+    
+    const tables = this.state.tables.map(table => {
+      return <p>{table.table_id} -- {table.table_size} -- {table.table_available}</p>
+    })
     return (
       <section className='boxbody'>
        <div className='boxheader'>
@@ -54,7 +70,9 @@ export default class DashboardRoute extends Component {
         <div className='boxfooter'>
             <button className='btn' type='submit'>Submit</button>
         </div>
-        </form>                
+        </form>
+        <button className='btn' onClick={this.getTables}>Show Tables</button> 
+        {tables}             
       </section>
     )
   }

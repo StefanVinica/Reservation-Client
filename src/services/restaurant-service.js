@@ -16,6 +16,20 @@ const RestaurantService = {
               : res.json()
         )
     },
+    getRinfo(){
+        return fetch(`${config.API_ENDPOINT}/rinfo`,{
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${TokenService.getAuthToken()}`,
+            }
+        })
+        .then(res =>
+            (!res.ok)
+              ? res.json().then(e => Promise.reject(e))
+              : res.json()
+        )
+    },
     getType(){
         return fetch(`${config.API_ENDPOINT}/info/type`,{
             method: 'GET',
@@ -56,6 +70,34 @@ const RestaurantService = {
                 table_size
             }),
         })
+    },
+    getTable(r_id){
+        return fetch(`${config.API_ENDPOINT}/table/${r_id}`,{
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${TokenService.getAuthToken()}`,
+            }
+        })
+        .then(res =>
+            (!res.ok)
+              ? res.json().then(e => Promise.reject(e))
+              : res.json()
+        )
+    },
+    getUser(){
+        return fetch(`${config.API_ENDPOINT}/user`,{
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${TokenService.getAuthToken()}`,
+            }
+        })
+        .then(res =>
+            (!res.ok)
+              ? res.json().then(e => Promise.reject(e))
+              : res.json()
+        )
     },
 }
 

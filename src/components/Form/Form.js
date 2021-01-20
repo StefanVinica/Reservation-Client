@@ -4,13 +4,13 @@ import './Form.css'
 
 export function Label({ className, ...props }) {
   return (
-    <label className={cx('Label', className)} {...props} />
+    <label className={cx('label', className)} {...props} />
   )
 }
 
 export const Input =  React.forwardRef(({ className, ...props }, ref) => {
   return (
-    <input className={cx('Input', className)} type='text' ref={ref} {...props} />
+    <input className={cx('input', className)} type='text' ref={ref} {...props} />
   )
 })
 
