@@ -43,7 +43,12 @@ export default class UserDashboard extends Component {
     }
     handleSearch = (event) => {
         event.preventDefault()
-        RestaurantService.findTables(this.state.type,this.state.party)
+        const ffrom = new Date(this.state.date) // transforms date
+        const to = new Date(this.state.date) // transforms date
+        to.setHours(to.getHours()+2)        
+        const jsonToDate = to.toJSON()
+        const jsonFromDate = ffrom.toJSON()       
+        RestaurantService.findTables(this.state.type,this.state.party,jsonFromDate,jsonToDate)
         .then(search=>{
             this.setState({
                 search
@@ -54,7 +59,6 @@ export default class UserDashboard extends Component {
        const { history } = this.props
        const ffrom = new Date(from) // transforms date
        const to = new Date(from) // transforms date
-       //ffrom.setHours(ffrom.getHours()-8)
        to.setHours(to.getHours()+2)
        const jsonToDate = to.toJSON()
        const jsonFromDate = ffrom.toJSON()
@@ -66,6 +70,10 @@ export default class UserDashboard extends Component {
         RestaurantService.makeReservation(r_id,jsonFromDate,jsonToDate,ppl,id)
         history.push('/myreservation')
        }
+    }
+    redirect = () => {
+        const { history } = this.props
+        history.push('/myreservation')
     }
 
     render() {
@@ -97,6 +105,7 @@ export default class UserDashboard extends Component {
         return (
             <section className='box'>
                 <h2>Find a reservation</h2>
+                
                 <form>
                 
                 <div className='boxheader'>
@@ -145,11 +154,12 @@ export default class UserDashboard extends Component {
               <Button onClick={this.handleSearch} className='btn'>
                 Find Avilable Tables
               </Button>
-             </div>  
-              </div>
-                            
+              </div>  
+              </div>           
               </form>
-
+              <div className='boxfooter'>
+                <button className='btn' onClick={this.redirect}>See my Reservations</button>
+              </div>  
               <div className='box'>
                 <ul className='boxbody'>
                     {avilable}

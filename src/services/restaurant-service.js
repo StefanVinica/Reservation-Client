@@ -99,13 +99,17 @@ const RestaurantService = {
               : res.json()
         )
     },
-    findTables(type,party){
+    findTables(type,party,from,to){
         return fetch(`${config.API_ENDPOINT}/find/${type}/${party}`,{
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'content-type': 'application/json',
                 'authorization': `Bearer ${TokenService.getAuthToken()}`,
-            }
+            },
+            body: JSON.stringify({
+                from,
+                to
+            }),
         })
         .then(res =>
             (!res.ok)

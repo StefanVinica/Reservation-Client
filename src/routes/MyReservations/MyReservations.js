@@ -19,12 +19,14 @@ export default class MyReservations extends Component {
     }
 
     componentDidUpdate(){
+        setTimeout(() => {
         RestaurantService.myReseservations()
         .then(reservations =>{
             this.setState({
                 reservations
             })
         }) 
+    },3000)
     }
 
     fixTimeZone(utc_date){
@@ -32,6 +34,11 @@ export default class MyReservations extends Component {
         const date = new Date(utc_date)
         const newDate = date.setMinutes(date.getMinutes() - offset)
         return newDate
+    }
+
+    redirect = () => {
+        const { history } = this.props
+        history.push('/userDashboard')        
     }
 
     render() {
@@ -58,7 +65,8 @@ export default class MyReservations extends Component {
             <h2>My Reservations</h2>
             </div>
             <div className='boxbody'>
-            {myres}
+                <button className='btn' onClick={this.redirect}>New Reservation</button>
+                {myres}
             </div>
             </section>
         )

@@ -30,6 +30,7 @@ export default class DashboardRoute extends Component {
   }
 
   componentDidUpdate(){
+    setTimeout(() => {
     RestaurantService.getInfo()
     .then(info => {
       this.setState({
@@ -37,6 +38,7 @@ export default class DashboardRoute extends Component {
         r_id: info.id
       })
     })
+  },3000)
   }
 
   getTables = () => {
