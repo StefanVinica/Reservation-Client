@@ -113,6 +113,36 @@ const RestaurantService = {
               : res.json()
         )
     },
+    makeReservation(restaurant_id,res_from,res_to,number_of_ppl,t_id){
+        return fetch(`${config.API_ENDPOINT}/reservation`,{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${TokenService.getAuthToken()}`,
+            },
+            body: JSON.stringify({
+                restaurant_id,
+                res_from,
+                res_to,
+                number_of_ppl,
+                t_id
+            }),
+        })
+    },
+    myReseservations(){
+        return fetch(`${config.API_ENDPOINT}/myres`,{
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${TokenService.getAuthToken()}`,
+            }
+        })
+        .then(res =>
+            (!res.ok)
+              ? res.json().then(e => Promise.reject(e))
+              : res.json()
+        )
+    }
 }
 
 export default RestaurantService

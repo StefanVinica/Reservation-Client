@@ -3,6 +3,11 @@ import RestaurantService from '../../services/restaurant-service'
 import { Input, Required, Label } from '../../components/Form/Form'
 import Button from '../../components/Button/Button'
 export default class UserDashboard extends Component {
+    static defaultProps = {
+        history: {
+          push: () => {},
+        },
+    }    
 
     state={
         date: '',
@@ -45,8 +50,21 @@ export default class UserDashboard extends Component {
             })
         })
     }
-    handleReserve = (id,r_id,from_date) =>{
-       
+    handleReserve = (id,r_id,from) =>{
+        const { history } = this.props
+        const ffrom = new Date(from)
+       const to = new Date(from)
+       to.setHours(to.getHours()+2)
+       const jsonToDate = to.toJSON()
+       const jsonFromDate = ffrom.toJSON()
+       const ppl = this.state.party 
+       if(jsonFromDate === null){
+           alert('Pick a date')
+       }
+       else{
+        RestaurantService.makeReservation(r_id,jsonFromDate,jsonToDate,ppl,id)
+        .then(history.push('/myreservation'))
+       }
     }
 
     render() {
@@ -59,9 +77,8 @@ export default class UserDashboard extends Component {
         )
 
         const tables = this.state.search
-        const avilable = tables.map(table=>{
-            if(table.res_from === null){
-                return <li key={table.table_id}>
+        const avilable = tables.map((table,index)=>{
+                return <li key={index}>
                     <div className='boxheader'>
                     <h3>{table.r_name}</h3>
                     <div className='boxfooter'>
@@ -74,7 +91,6 @@ export default class UserDashboard extends Component {
                     </div>
                     </div>
                     </li>
-            }
         })
 
         return (

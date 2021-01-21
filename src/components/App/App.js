@@ -10,6 +10,7 @@ import NotFoundRoute from '../../routes/NotFoundRoute/NotFoundRoute'
 import RestaurantCreation from '../../routes/RestaurantCreation/RestaurantCreation'
 import Redirect from '../../routes/Redirect'
 import UserDashboard from '../../routes/UserDashboardRoute/UserDashboard'
+import MyReservations from '../../routes/MyReservations/MyReservations'
 import './App.css'
 
 export default class App extends Component {
@@ -38,6 +39,10 @@ export default class App extends Component {
             <PrivateRoute
               path={'/redirect'}
               component={Redirect}
+            />
+            <PrivateRoute
+              path={'/myreservation'}
+              component={MyReservations}
             />
             <PrivateRoute
               path={'/userDashboard'}
