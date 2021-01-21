@@ -113,7 +113,7 @@ export default class RestaurantCreation extends Component {
         </div>
          
         <div className='boxbody'><label>Select Type</label></div>
-            <select name='type' className="select-type" onChange={this.handleTypeChange}> 
+        <select name='type' className="select-type" onChange={this.handleTypeChange}> 
                  {options}
             </select>
 

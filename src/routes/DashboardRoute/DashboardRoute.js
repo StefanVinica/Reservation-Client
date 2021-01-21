@@ -12,6 +12,14 @@ export default class DashboardRoute extends Component {
   }
 
   componentDidMount() {
+    const { history } = this.props
+    RestaurantService.getUser()
+    .then(user=>{
+      if(user.user_type === 'User'){
+        history.push('/userDashboard')
+      }
+    })
+
     RestaurantService.getInfo()
     .then(info => {
       this.setState({

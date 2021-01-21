@@ -99,6 +99,20 @@ const RestaurantService = {
               : res.json()
         )
     },
+    findTables(type,party){
+        return fetch(`${config.API_ENDPOINT}/find/${type}/${party}`,{
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${TokenService.getAuthToken()}`,
+            }
+        })
+        .then(res =>
+            (!res.ok)
+              ? res.json().then(e => Promise.reject(e))
+              : res.json()
+        )
+    },
 }
 
 export default RestaurantService
