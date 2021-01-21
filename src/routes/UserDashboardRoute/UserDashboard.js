@@ -51,9 +51,10 @@ export default class UserDashboard extends Component {
         })
     }
     handleReserve = (id,r_id,from) =>{
-        const { history } = this.props
-        const ffrom = new Date(from)
-       const to = new Date(from)
+       const { history } = this.props
+       const ffrom = new Date(from) // transforms date
+       const to = new Date(from) // transforms date
+       //ffrom.setHours(ffrom.getHours()-8)
        to.setHours(to.getHours()+2)
        const jsonToDate = to.toJSON()
        const jsonFromDate = ffrom.toJSON()
@@ -63,7 +64,7 @@ export default class UserDashboard extends Component {
        }
        else{
         RestaurantService.makeReservation(r_id,jsonFromDate,jsonToDate,ppl,id)
-        .then(history.push('/myreservation'))
+        history.push('/myreservation')
        }
     }
 
@@ -122,6 +123,7 @@ export default class UserDashboard extends Component {
                   name='type' 
                   className=''
                   onChange={this.handleTypeChange}> 
+                    <option hidden></option>
                     {options}
                   </select>
               </div>

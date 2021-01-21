@@ -29,6 +29,16 @@ export default class DashboardRoute extends Component {
     })
   }
 
+  componentDidUpdate(){
+    RestaurantService.getInfo()
+    .then(info => {
+      this.setState({
+        info: info,
+        r_id: info.id
+      })
+    })
+  }
+
   getTables = () => {
      RestaurantService.getTable(parseInt(this.state.info.id))
     .then(tables => {
@@ -58,9 +68,10 @@ export default class DashboardRoute extends Component {
       return <p>{table.table_id} -- {table.table_size} -- {table.table_available}</p>
     })
     return (
-      <section className='boxbody'>
+      <section>
        <div className='boxheader'>
          <h2>{this.state.info.r_name}</h2>
+         <button className=''>Restaurant Tables</button>
        </div>
        <form onSubmit={this.handleSubmit}>
        <div className='boxbody'>

@@ -18,7 +18,24 @@ export default class MyReservations extends Component {
         })
     }
 
+    componentDidUpdate(){
+        RestaurantService.myReseservations()
+        .then(reservations =>{
+            this.setState({
+                reservations
+            })
+        }) 
+    }
+
+    fixTimeZone(utc_date){
+        const offset = new Date().getTimezoneOffset()
+        const date = new Date(utc_date)
+        const newDate = date.setMinutes(date.getMinutes() - offset)
+        return newDate
+    }
+
     render() {
+        
         const res = this.state.reservations
         const myres = res.map((rez,index)=>{
             return <div key={index} className='box'>
@@ -28,7 +45,7 @@ export default class MyReservations extends Component {
                     <p>Phone: {rez.r_phone}</p>
                 </div>
                 <div className='boxbody'>
-                    <h4>Reservation From: {format(new Date(rez.res_from), 'MM/dd/yyyy  hh:mm:ss a')}</h4>
+                    <h4>Reservation From: {format(new Date(this.fixTimeZone(rez.res_from)), 'MM/dd/yyyy  hh:mm:ss a')}</h4>
                 </div>
                 <div className='boxfooter'>
                     <button className='btn' value={rez.id}>Cancel</button>
