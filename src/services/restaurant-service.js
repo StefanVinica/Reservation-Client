@@ -59,6 +59,18 @@ const RestaurantService = {
             }),
         })
     },
+    updateTable(table_size,id){
+        return fetch(`${config.API_ENDPOINT}/tablesize/${id}`,{
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${TokenService.getAuthToken()}`,
+            },
+            body: JSON.stringify({
+                table_size
+            }),
+        })
+    },    
     insertTable(table_size,r_id,t_name){
         return fetch(`${config.API_ENDPOINT}/table/${r_id}`,{
             method: 'POST',
@@ -162,6 +174,15 @@ const RestaurantService = {
               : res.json()
         )
     },
+    deleteres(id){
+        return fetch(`${config.API_ENDPOINT}/reservation/${id}`,{
+          method: 'DELETE',
+          headers: {
+              'content-type': 'application/json',
+              'authorization': `Bearer ${TokenService.getAuthToken()}`,
+          }
+      })
+      },
 }
 
 export default RestaurantService

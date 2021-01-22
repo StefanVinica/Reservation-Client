@@ -20,13 +20,21 @@ export default class MyReservations extends Component {
 
     componentDidUpdate(){
        if(this.state.reservations.length === 0){
+            RestaurantService.myReseservations()
+            .then(reservations =>{
+                this.setState({
+                 reservations
+              })
+           })   
+        }
         RestaurantService.myReseservations()
-        .then(reservations =>{
-            this.setState({
-                reservations
-            })
-        }) 
-    }
+        .then(reservations=>{
+            if(reservations.length>this.state.reservations.length){
+                this.setState({
+                    reservations
+                })
+            }
+        })
     }
 
     fixTimeZone(utc_date){
@@ -39,6 +47,17 @@ export default class MyReservations extends Component {
     redirect = () => {
         const { history } = this.props
         history.push('/userDashboard')        
+    }
+
+    handleDelete = e => {
+       RestaurantService.deleteres(parseInt(e))
+        RestaurantService.myReseservations()
+        .then(reservations =>{
+            this.setState({
+                reservations
+            })
+        }) 
+       
     }
 
     render() {
@@ -55,7 +74,12 @@ export default class MyReservations extends Component {
                     <h4>Reservation From: {format(new Date(this.fixTimeZone(rez.res_from)), 'MM/dd/yyyy  hh:mm:ss a')}</h4>
                 </div>
                 <div className='boxfooter'>
-                    <button className='btn' value={rez.id}>Cancel</button>
+                    <button 
+                    className='btn' 
+                    value={rez.id}
+                    onClick={e => this.handleDelete(e.target.value)}
+                    >Cancel
+                    </button>
                 </div>
             </div>
         })
@@ -65,7 +89,6 @@ export default class MyReservations extends Component {
             <h2>My Reservations</h2>
             </div>
             <div className='boxbody'>
-                <button className='btn' onClick={this.redirect}>New Reservation</button>
                 {myres}
             </div>
             </section>

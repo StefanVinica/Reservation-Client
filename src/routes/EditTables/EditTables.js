@@ -3,13 +3,15 @@ import { Input, Label } from '../../components/Form/Form'
 import RestaurantService from '../../services/restaurant-service'
 
 
+
 export default class EditTables extends Component {
 
     state = {
         table_size: 0,
         tables: [],
         name:'',
-        r_id:0
+        r_id:0,
+        new_TSize: 0
     }
 
     componentDidMount() {
@@ -24,17 +26,45 @@ export default class EditTables extends Component {
             })
         })
     }
+    componentDidUpdate(){
+        RestaurantService.getTable(this.state.r_id)
+        .then(tables => {
+            if(tables.length>this.state.tables.length){
+                this.setState({
+                    tables
+                })
+            }
+        })
+    }
   
     handleTableSizeChange = event => {
       this.setState({
         table_size: event.target.value
       })
     }
+    // handleNewTableSizeChange = event => {
+    //     this.setState({
+    //         new_TSize: event.target.value
+    //     })
+    // }
     handleNameChange = event => {
         this.setState({
           name: event.target.value
         })
-      }
+    }
+    // handleSizeChange = event => {
+    //     RestaurantService.updateTable(parseInt(this.state.new_TSize),event)
+    //     const r_id = parseInt(this.props.history.location.pathname[this.props.history.location.pathname.length-1])
+    //     this.setState({
+    //         r_id
+    //     })
+    //     RestaurantService.getTable(r_id)
+    //     .then(tables => {
+    //         this.setState({
+    //             tables
+    //         })
+    //     })
+    // }
   
     handleSubmit = event => {
       event.preventDefault()
@@ -42,26 +72,41 @@ export default class EditTables extends Component {
       let table_size = parseInt(this.state.table_size)
       let t_name = this.state.name
       RestaurantService.insertTable(table_size, r_id,t_name)
+      RestaurantService.getTable(this.state.r_id)
+        .then(tables => {
+            this.setState({
+                tables
+            })
+        })
     }
 
     render() {
         const tables = this.state.tables
         const alltables = tables.map((table,index)=>{
-            return <div key={index} className='box'>
+            return <div key={index} className='box tables'>
                 <div className='boxheader'>
                     <h3>{table.t_name} - {table.table_id}</h3>
                 </div>
                 <div className='boxbody'>
-                    <p>Size:{table.table_size}</p>
+                    <Label>
+                        Table Size: 
+                            <Input
+                            placeholder={table.table_size}
+                            onChange={this.handleNewTableSizeChange}
+                            type="text"
+                            name="table_size"
+                            required
+                             />
+                    </Label>
                 </div>
-                <div className='boxfooter'>
-                    <button className='btn'>Edit</button>
-                </div>
+                {/* <div className='boxfooter'>
+                    <button className='btn' value={table.table_id} onClick={e=>this.handleSizeChange(e.target.value)}>Edit</button>
+                </div> */}
             </div>
         })
         return(
         <section>
-         <div className='container'>
+         <div className='alltables'>
             {alltables}
          </div>
          <div className='boxheader'>

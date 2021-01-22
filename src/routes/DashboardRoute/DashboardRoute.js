@@ -29,14 +29,6 @@ export default class DashboardRoute extends Component {
 
   componentDidUpdate() {
     if (this.state.reservations.length === 0) {
-        RestaurantService.getInfo()
-          .then(info => {
-            this.setState({
-              info: info,
-              r_id: info.id
-            })
-          })
-
         RestaurantService.adminReseservations(parseInt(this.state.r_id))
           .then(reservations => {
             this.setState({
@@ -44,6 +36,14 @@ export default class DashboardRoute extends Component {
             })
           })
     }
+    RestaurantService.adminReseservations(parseInt(this.state.r_id))
+          .then(reservations => {
+            if(reservations.length>this.state.reservations.length){
+              this.setState({
+                  reservations
+              })
+          }
+          })    
   }
 
   fixTimeZone(utc_date) {
@@ -56,6 +56,16 @@ export default class DashboardRoute extends Component {
   redirect = () => {
     const { history } = this.props
     history.push(`/edit/${this.state.r_id}`)
+  }
+
+  handleDelete = e => {
+    RestaurantService.deleteres(parseInt(e))
+    RestaurantService.adminReseservations(parseInt(this.state.r_id))
+          .then(reservations => {
+            this.setState({
+              reservations
+            })
+          })
   }
 
   render() {
@@ -71,7 +81,7 @@ export default class DashboardRoute extends Component {
           <p>To:{format(new Date(this.fixTimeZone(res.res_to)), 'MM/dd/yyyy  hh:mm:ss a')}</p>
         </div>
         <div className='boxfooter'>
-          <button>Reservation Complete</button>
+          <button value={res.id} onClick={e => this.handleDelete(e.target.value)}>Reservation Complete</button>
         </div>
       </div>
     })

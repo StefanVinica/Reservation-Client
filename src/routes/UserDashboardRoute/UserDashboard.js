@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import RestaurantService from '../../services/restaurant-service'
 import { Input, Required, Label } from '../../components/Form/Form'
 import Button from '../../components/Button/Button'
+
 export default class UserDashboard extends Component {
     static defaultProps = {
         history: {
@@ -13,8 +14,9 @@ export default class UserDashboard extends Component {
         date: '',
         types : [],
         type:'',
-        party:0,
-        search: []
+        party:1,
+        search: [],
+        today: new Date()
     }
 
     componentDidMount() {
@@ -47,7 +49,13 @@ export default class UserDashboard extends Component {
         const to = new Date(this.state.date) // transforms date
         to.setHours(to.getHours()+2)        
         const jsonToDate = to.toJSON()
-        const jsonFromDate = ffrom.toJSON()       
+        const jsonFromDate = ffrom.toJSON()
+        if(jsonFromDate === null){
+            alert('Pick a date')
+        }
+        if(this.state.type === ''){
+            alert('Pick what kind of restaurant')
+        }      
         RestaurantService.findTables(this.state.type,this.state.party,jsonFromDate,jsonToDate)
         .then(search=>{
             this.setState({
@@ -76,6 +84,7 @@ export default class UserDashboard extends Component {
         history.push('/myreservation')
     }
 
+
     render() {
    
         const types = this.state.types
@@ -87,8 +96,7 @@ export default class UserDashboard extends Component {
 
         const tables = this.state.search
         const avilable = tables.map((table,index)=>{
-                return <li key={index}>
-                    <div className='boxheader'>
+                return <div key={index} className='boxheader'>
                     <h3>{table.r_name}</h3>
                     <div className='boxfooter'>
                         <button 
@@ -99,7 +107,7 @@ export default class UserDashboard extends Component {
                         </button>
                     </div>
                     </div>
-                    </li>
+                    
         })
 
         return (
@@ -108,7 +116,7 @@ export default class UserDashboard extends Component {
                 
                 <form>
                 
-                <div className='boxheader'>
+                <div className='boxbody'>
                 <Label htmlFor='Date'>
                       Choose a date
                       <Required />
@@ -116,7 +124,8 @@ export default class UserDashboard extends Component {
                 <Input
                 type="datetime-local"
                 id="reservation-time"
-                name="reservation-time" 
+                name="reservation-time"
+                min={this.state.today} 
                 value={this.state.date}
                 onChange={this.handleChange}
                 >
@@ -151,7 +160,7 @@ export default class UserDashboard extends Component {
               >
               </Input>
               <div className='btn-div'>
-              <Button onClick={this.handleSearch} className='btn'>
+              <Button onClick={this.handleSearch}>
                 Find Avilable Tables
               </Button>
               </div>  
