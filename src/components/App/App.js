@@ -11,6 +11,7 @@ import RestaurantCreation from '../../routes/RestaurantCreation/RestaurantCreati
 import Redirect from '../../routes/Redirect'
 import UserDashboard from '../../routes/UserDashboardRoute/UserDashboard'
 import MyReservations from '../../routes/MyReservations/MyReservations'
+import EditTables from '../../routes/EditTables/EditTables'
 import './App.css'
 
 export default class App extends Component {
@@ -39,6 +40,10 @@ export default class App extends Component {
             <PrivateRoute
               path={'/redirect'}
               component={Redirect}
+            />
+            <PrivateRoute
+              path={'/edit/:id'}
+              component={EditTables}
             />
             <PrivateRoute
               path={'/myreservation'}

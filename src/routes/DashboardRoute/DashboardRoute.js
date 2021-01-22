@@ -1,99 +1,93 @@
 import React, { Component } from 'react'
 import RestaurantService from '../../services/restaurant-service'
-
-
+import { format } from "date-fns";
 
 export default class DashboardRoute extends Component {
   state = {
     info: {},
-    table_size: 0,
-    tables: [],
-    r_id: 0
+    r_id: 0,
+    reservations: []
   }
 
   componentDidMount() {
     const { history } = this.props
     RestaurantService.getUser()
-    .then(user=>{
-      if(user.user_type === 'User'){
-        history.push('/userDashboard')
-      }
-    })
+      .then(user => {
+        if (user.user_type === 'User') {
+          history.push('/userDashboard')
+        }
+      })
 
     RestaurantService.getInfo()
-    .then(info => {
-      this.setState({
-        info: info,
-        r_id: info.id
+      .then(info => {
+        this.setState({
+          info: info,
+          r_id: info.id
+        })
       })
-    })
   }
 
-  componentDidUpdate(){
-    setTimeout(() => {
-    RestaurantService.getInfo()
-    .then(info => {
-      this.setState({
-        info: info,
-        r_id: info.id
-      })
-    })
-  },3000)
+  componentDidUpdate() {
+    if (this.state.reservations.length === 0) {
+        RestaurantService.getInfo()
+          .then(info => {
+            this.setState({
+              info: info,
+              r_id: info.id
+            })
+          })
+
+        RestaurantService.adminReseservations(parseInt(this.state.r_id))
+          .then(reservations => {
+            this.setState({
+              reservations
+            })
+          })
+    }
   }
 
-  getTables = () => {
-     RestaurantService.getTable(parseInt(this.state.info.id))
-    .then(tables => {
-      this.setState({
-        tables
-      })
-    })
+  fixTimeZone(utc_date) {
+    const offset = new Date().getTimezoneOffset()
+    const date = new Date(utc_date)
+    const newDate = date.setMinutes(date.getMinutes() - offset)
+    return newDate
   }
 
-  handleTableSizeChange = event => {
-    this.setState({
-      table_size: event.target.value
-    })
+  redirect = () => {
+    const { history } = this.props
+    history.push(`/edit/${this.state.r_id}`)
   }
 
-  handleSubmit = event => {
-    event.preventDefault()
-    let r_id = parseInt(this.state.info.id)
-    let table_size = parseInt(this.state.table_size)
-
-    RestaurantService.insertTable(table_size,r_id)
-  }
-  
   render() {
-    
-    const tables = this.state.tables.map(table => {
-      return <p>{table.table_id} -- {table.table_size} -- {table.table_available}</p>
+    const reservations = this.state.reservations
+    const allreservations = reservations.map((res, index) => {
+      return <div key={index} className='box'>
+        <div className='boxheader'>
+          <h3 className='boxtitle'>{res.name} - Table:{res.t_name}</h3>
+        </div>
+        <div className='boxbody'>
+          <p>Party Size:{res.number_of_ppl}</p>
+          <p>From:{format(new Date(this.fixTimeZone(res.res_from)), 'MM/dd/yyyy  hh:mm:ss a')}</p>
+          <p>To:{format(new Date(this.fixTimeZone(res.res_to)), 'MM/dd/yyyy  hh:mm:ss a')}</p>
+        </div>
+        <div className='boxfooter'>
+          <button>Reservation Complete</button>
+        </div>
+      </div>
     })
     return (
       <section>
-       <div className='boxheader'>
-         <h2>{this.state.info.r_name}</h2>
-         <button className=''>Restaurant Tables</button>
-       </div>
-       <form onSubmit={this.handleSubmit}>
-       <div className='boxbody'>
-            <label>
-                Table Size:
-                <input 
-                value={this.state.table_size}
-                onChange={this.handleTableSizeChange} 
-                type="number" 
-                name="table_size" 
-                required
-                />
-                </label>
+        <div className='boxheader'>
+          <h2>{this.state.info.r_name}</h2>
         </div>
-        <div className='boxfooter'>
-            <button className='btn' type='submit'>Submit</button>
+        <div className='boxbody'>
+        <button onClick={this.redirect} className='btn'>Edit Tables</button>
         </div>
-        </form>
-        <button className='btn' onClick={this.getTables}>Show Tables</button> 
-        {tables}             
+        <div className='container'>
+          <h2>All reservations</h2>
+          {allreservations}
+        </div>
+
       </section>
     )
   }

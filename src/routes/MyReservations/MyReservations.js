@@ -19,14 +19,14 @@ export default class MyReservations extends Component {
     }
 
     componentDidUpdate(){
-        setTimeout(() => {
+       if(this.state.reservations.length === 0){
         RestaurantService.myReseservations()
         .then(reservations =>{
             this.setState({
                 reservations
             })
         }) 
-    },3000)
+    }
     }
 
     fixTimeZone(utc_date){

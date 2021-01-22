@@ -59,7 +59,7 @@ const RestaurantService = {
             }),
         })
     },
-    insertTable(table_size,r_id){
+    insertTable(table_size,r_id,t_name){
         return fetch(`${config.API_ENDPOINT}/table/${r_id}`,{
             method: 'POST',
             headers: {
@@ -67,7 +67,8 @@ const RestaurantService = {
                 'authorization': `Bearer ${TokenService.getAuthToken()}`,
             },
             body: JSON.stringify({
-                table_size
+                table_size,
+                t_name
             }),
         })
     },
@@ -146,7 +147,21 @@ const RestaurantService = {
               ? res.json().then(e => Promise.reject(e))
               : res.json()
         )
-    }
+    },
+    adminReseservations(r_id){
+        return fetch(`${config.API_ENDPOINT}/adminres/${r_id}`,{
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${TokenService.getAuthToken()}`,
+            }
+        })
+        .then(res =>
+            (!res.ok)
+              ? res.json().then(e => Promise.reject(e))
+              : res.json()
+        )
+    },
 }
 
 export default RestaurantService
