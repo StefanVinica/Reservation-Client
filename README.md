@@ -38,7 +38,7 @@ As an Admin I can
 
 # ScreenShots
 https://prnt.sc/xhpy8m - Restaurant Creation
-![Restaurant Creation](https://prnt.sc/xhpy8m)
+![Restaurant Creation](https://i.ibb.co/TKd673p/login.png)
 https://prnt.sc/xhq037 - Admin Dashboard
 https://prnt.sc/xhq0jc - Table Dashboard
 
