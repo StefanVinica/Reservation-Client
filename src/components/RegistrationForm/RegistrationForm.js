@@ -5,7 +5,6 @@ import AuthApiService from '../../services/auth-api-service'
 import Button from '../Button/Button'
 import UserContext from "../../contexts/UserContext"
 import './RegistrationForm.css'
-import Select from '../Select/Select'
 
 class RegistrationForm extends Component {
   static contextType = UserContext
@@ -118,12 +117,21 @@ class RegistrationForm extends Component {
                   />
               </div>
               <div className=''>
-                  <Label htmlFor='user-type'>
+                  <Label htmlFor='user_type'>
                       Choose a user Type
                       <Required />
                   </Label>
-                  <Select
-                  />
+                  <select
+                  name='restaurant_type'
+                  id='user_type'
+                  > 
+                    <option id='Admin' key='1' value='Admin'>
+                        Admin
+                    </option>
+                    <option id='User' key='2' value='User'>
+                        User
+                    </option>
+                  </select>
               </div>
               {this.handleLoadingState()}
               <footer>

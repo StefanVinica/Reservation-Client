@@ -15,7 +15,7 @@ export default class EditTables extends Component {
     }
 
     componentDidMount() {
-        const r_id = parseInt(this.props.history.location.pathname[this.props.history.location.pathname.length-1])
+        const r_id = parseInt(this.props.match.params.id)
         this.setState({
             r_id
         })
@@ -42,29 +42,12 @@ export default class EditTables extends Component {
         table_size: event.target.value
       })
     }
-    // handleNewTableSizeChange = event => {
-    //     this.setState({
-    //         new_TSize: event.target.value
-    //     })
-    // }
+
     handleNameChange = event => {
         this.setState({
           name: event.target.value
         })
     }
-    // handleSizeChange = event => {
-    //     RestaurantService.updateTable(parseInt(this.state.new_TSize),event)
-    //     const r_id = parseInt(this.props.history.location.pathname[this.props.history.location.pathname.length-1])
-    //     this.setState({
-    //         r_id
-    //     })
-    //     RestaurantService.getTable(r_id)
-    //     .then(tables => {
-    //         this.setState({
-    //             tables
-    //         })
-    //     })
-    // }
   
     handleSubmit = event => {
       event.preventDefault()

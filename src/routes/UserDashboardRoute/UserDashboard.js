@@ -16,7 +16,8 @@ export default class UserDashboard extends Component {
         type:'',
         party:1,
         search: [],
-        today: new Date()
+        today: new Date(),
+        noresults: ''
     }
 
     componentDidMount() {
@@ -58,6 +59,16 @@ export default class UserDashboard extends Component {
         }      
         RestaurantService.findTables(this.state.type,this.state.party,jsonFromDate,jsonToDate)
         .then(search=>{
+            if(search.length === 0){
+                this.setState({
+                    noresults: 'No Results'
+                })
+            }
+            else{
+                this.setState({
+                    noresults: ' '
+                })
+            }
             this.setState({
                 search
             })
@@ -89,7 +100,7 @@ export default class UserDashboard extends Component {
    
         const types = this.state.types
         const options = types.map((type) =>
-            <option name={type.type_id} key={type.type_id} value={type.type_id}>
+            <option id={type.type_id} key={type.type_id} value={type.type_id}>
                 {type.type_name}
             </option>
         )
@@ -125,7 +136,6 @@ export default class UserDashboard extends Component {
                 type="datetime-local"
                 id="reservation-time"
                 name="reservation-time"
-                min={this.state.today} 
                 value={this.state.date}
                 onChange={this.handleChange}
                 >
@@ -141,7 +151,7 @@ export default class UserDashboard extends Component {
                   name='type' 
                   className=''
                   onChange={this.handleTypeChange}> 
-                    <option hidden></option>
+                    <option label='Choose One' hidden></option>
                     {options}
                   </select>
               </div>
@@ -170,9 +180,10 @@ export default class UserDashboard extends Component {
                 <button className='btn' onClick={this.redirect}>See my Reservations</button>
               </div>  
               <div className='box'>
-                <ul className='boxbody'>
+                <div className='boxbody'>
+                    <h2>{this.state.noresults}</h2>
                     {avilable}
-                </ul>
+                </div>
               </div>
             </section>
         )
