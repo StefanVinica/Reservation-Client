@@ -127,9 +127,3 @@
         display: flex;
         flex-wrap: wrap;
     }
-    @media (min-width: 1024px){
-        body{
-            max-width: 2000px;
-        }
-        
-    }
