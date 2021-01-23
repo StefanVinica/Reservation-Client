@@ -28,14 +28,16 @@ export default class DashboardRoute extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.reservations.length === 0) {
-        RestaurantService.adminReseservations(parseInt(this.state.r_id))
-          .then(reservations => {
-            this.setState({
-              reservations
-            })
-          })
-    }
+    RestaurantService.getInfo()
+      .then(info => {
+        if(this.state.r_id === 0){
+        this.setState({
+          info: info,
+          r_id: info.id
+        })
+      }
+      })
+
     RestaurantService.adminReseservations(parseInt(this.state.r_id))
           .then(reservations => {
             if(reservations.length>this.state.reservations.length){
