@@ -40,10 +40,14 @@ As an Admin I can
 https://prnt.sc/xhpy8m - Restaurant Creation
 ![Restaurant Creation](https://i.ibb.co/TKd673p/login.png)
 https://prnt.sc/xhq037 - Admin Dashboard
+![Admin Dashboard](https://i.ibb.co/B3DdQWw/3.png)
 https://prnt.sc/xhq0jc - Table Dashboard
+![Table Dashboard](https://i.ibb.co/HD4q45Q/4.png)
 
 https://prnt.sc/xhq296 - User Search
+![User Search](https://i.ibb.co/rpNPkhG/5.png)
 https://prnt.sc/xhq300 - User active reservations
+![User active reservations](https://i.ibb.co/WgG67Ym/6.png)
 
 # Technologies
 This app uses React.js for the Client side, Node.js and Express for the server side and PostgreSQL for the database
