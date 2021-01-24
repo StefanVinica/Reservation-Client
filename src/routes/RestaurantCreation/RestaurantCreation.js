@@ -87,7 +87,7 @@ export default class RestaurantCreation extends Component {
         </div>
         <div className='boxbody'>
             <label>
-                Adress:
+                Address:
                 <input 
                 placeholder={this.state.info.r_adress}
                 value={this.state.adress}

@@ -93,7 +93,7 @@ export default class DashboardRoute extends Component {
           <h2>{this.state.info.r_name}</h2>
         </div>
         <div className='boxbody'>
-        <button onClick={this.redirect} className='btn'>Edit Tables</button>
+        <button onClick={this.redirect} className='btn'>View All Tables</button>
         </div>
         <div className='container'>
           <h2>All reservations</h2>

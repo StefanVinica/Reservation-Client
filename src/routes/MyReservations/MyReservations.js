@@ -67,7 +67,7 @@ export default class MyReservations extends Component {
             return <div key={index} className='box'>
                 <div className='boxheader'>
                     <h3 className='boxtitle'>{rez.r_name}</h3>
-                    <p>Adress: {rez.r_adress}</p>
+                    <p>Address: {rez.r_adress}</p>
                     <p>Phone: {rez.r_phone}</p>
                 </div>
                 <div className='boxbody'>

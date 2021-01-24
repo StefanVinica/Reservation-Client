@@ -19,9 +19,12 @@ class Header extends Component {
         </span>
         <nav>
           <Link
+            className='login'
             onClick={this.handleLogoutClick}
             to='/login'>
+            <button className='btn'>
             Logout
+            </button>
           </Link>
         </nav>
       </div>
@@ -30,10 +33,10 @@ class Header extends Component {
 
   renderLoginLink() {
     return (
-      <nav>
-        <Link to='/login'>Login</Link>
+      <nav className='navbar'>
+        <Link className='login' to='/login'><button className='btn'>Login</button></Link>
         {' '}
-        <Link to='/register'>Sign up</Link>
+        <Link className='login' to='/register'><button className='btn'>Sign up</button></Link>
       </nav>
     )
   }
@@ -43,7 +46,7 @@ class Header extends Component {
       <header>
         <h1>
           <Link to='/'>
-            Reservation
+            <h3>Reservation</h3>
           </Link>
         </h1>
         {TokenService.hasAuthToken()

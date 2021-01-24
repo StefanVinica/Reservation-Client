@@ -94,6 +94,9 @@
     .btn{
         background-color: #304dcf;
     }
+    .login{
+        margin: 10px;
+    }
     .flex{
         display:flex;
     }

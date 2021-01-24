@@ -73,18 +73,9 @@ export default class EditTables extends Component {
                 <div className='boxbody'>
                     <Label>
                         Table Size: 
-                            <Input
-                            placeholder={table.table_size}
-                            onChange={this.handleNewTableSizeChange}
-                            type="text"
-                            name="table_size"
-                            required
-                             />
+                             <h4>{table.table_size}</h4>
                     </Label>
                 </div>
-                {/* <div className='boxfooter'>
-                    <button className='btn' value={table.table_id} onClick={e=>this.handleSizeChange(e.target.value)}>Edit</button>
-                </div> */}
             </div>
         })
         return(
