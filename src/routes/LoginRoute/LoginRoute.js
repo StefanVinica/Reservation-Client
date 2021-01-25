@@ -8,7 +8,8 @@ class LoginRoute extends Component {
       push: () => { },
     },
   }
-
+  //Login
+  //
   handleLoginSuccess = () => {
     const { location, history } = this.props
     const destination = (location.state || {}).from || '/'
@@ -23,7 +24,7 @@ class LoginRoute extends Component {
           onLoginSuccess={this.handleLoginSuccess}
         />
       </section>
-    );
+    )
   }
 }
 

@@ -53,7 +53,7 @@ class Header extends Component {
           ? this.renderLogoutLink()
           : this.renderLoginLink()}
       </header>
-    );
+    )
   }
 }
 

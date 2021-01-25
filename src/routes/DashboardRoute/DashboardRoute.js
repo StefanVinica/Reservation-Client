@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import RestaurantService from '../../services/restaurant-service'
-import { format } from "date-fns";
+import { format } from "date-fns"
 
 export default class DashboardRoute extends Component {
   state = {
@@ -8,16 +8,20 @@ export default class DashboardRoute extends Component {
     r_id: 0,
     reservations: []
   }
-
+  
   componentDidMount() {
     const { history } = this.props
+    //Redirect if regular user
+    //
     RestaurantService.getUser()
       .then(user => {
         if (user.user_type === 'User') {
           history.push('/userDashboard')
         }
       })
-
+    
+    //Get initial information for restaurant
+    //  
     RestaurantService.getInfo()
       .then(info => {
         this.setState({
@@ -25,9 +29,21 @@ export default class DashboardRoute extends Component {
           r_id: info.id
         })
       })
+    
+    //Get initial reservations
+    //  
+    RestaurantService.adminReseservations(parseInt(this.state.r_id))
+    .then(reservations => {
+      console.log(reservations)
+      this.setState({
+        reservations
+      })
+    })  
   }
 
   componentDidUpdate() {
+    //After first edit this is here to update the name
+    //
     RestaurantService.getInfo()
       .then(info => {
         if(this.state.r_id === 0){
@@ -37,7 +53,9 @@ export default class DashboardRoute extends Component {
         })
       }
       })
-
+    
+    //Keep updating reservations after user cancels them
+    //
     RestaurantService.adminReseservations(parseInt(this.state.r_id))
           .then(reservations => {
             if(reservations.length>this.state.reservations.length){
@@ -48,6 +66,8 @@ export default class DashboardRoute extends Component {
           })    
   }
 
+  //Converting time zones
+  //
   fixTimeZone(utc_date) {
     const offset = new Date().getTimezoneOffset()
     const date = new Date(utc_date)
@@ -61,6 +81,8 @@ export default class DashboardRoute extends Component {
   }
 
   handleDelete = e => {
+    //Delete and call component update
+    //
     RestaurantService.deleteres(parseInt(e))
     RestaurantService.adminReseservations(parseInt(this.state.r_id))
           .then(reservations => {

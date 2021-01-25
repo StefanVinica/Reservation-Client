@@ -7,7 +7,7 @@ class NotFoundRoute extends Component {
         <h2>404 - Page not found</h2>
         <p>Try going back to your previous page.</p>
       </section>
-    );
+    )
   }
 }
 

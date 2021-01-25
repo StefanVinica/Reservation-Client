@@ -11,14 +11,19 @@ export default class EditTables extends Component {
         tables: [],
         name:'',
         r_id:0,
-        new_TSize: 0
+        new_TSize: 0,
+        namesize: ' '
     }
 
     componentDidMount() {
-        const r_id = parseInt(this.props.match.params.id)
+      //Get restaurant id from url params
+      //  
+      const r_id = parseInt(this.props.match.params.id)
         this.setState({
             r_id
         })
+      //Get all tables for the restaurant id provided in the params
+      //  
         RestaurantService.getTable(r_id)
         .then(tables => {
             this.setState({
@@ -27,6 +32,8 @@ export default class EditTables extends Component {
         })
     }
     componentDidUpdate(){
+      //Keep track if tables update
+      //
         RestaurantService.getTable(this.state.r_id)
         .then(tables => {
             if(tables.length>this.state.tables.length){
@@ -54,6 +61,16 @@ export default class EditTables extends Component {
       let r_id = parseInt(this.state.r_id)
       let table_size = parseInt(this.state.table_size)
       let t_name = this.state.name
+      if(table_size === 0 || t_name===' '){
+        this.setState({
+          namesize: 'Please enter valid information for Table Size or Table Name'
+        })
+        return
+      }
+      else{
+        this.setState({
+          namesize: ''
+        })
       RestaurantService.insertTable(table_size, r_id,t_name)
       RestaurantService.getTable(this.state.r_id)
         .then(tables => {
@@ -61,6 +78,7 @@ export default class EditTables extends Component {
                 tables
             })
         })
+      }
     }
 
     render() {
@@ -85,6 +103,7 @@ export default class EditTables extends Component {
          </div>
          <div className='boxheader'>
             <h2>Add new Table</h2>
+            <h2 className='red'>{this.state.namesize}</h2>
          </div>
          <form onSubmit={this.handleSubmit}>
           <div className='boxbody'>

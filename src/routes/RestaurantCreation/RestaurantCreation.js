@@ -13,12 +13,16 @@ export default class RestaurantCreation extends Component {
   }
 
   componentDidMount() {
+    //Get Restaurant information
+    // 
     RestaurantService.getInfo()
     .then(info => {
       this.setState({
         info: info
       })
     })
+    //Get avilable types
+    //
     RestaurantService.getType()
     .then(type => {
         this.setState({
@@ -52,7 +56,7 @@ export default class RestaurantCreation extends Component {
         event.preventDefault()
         let r_id = parseInt(this.state.info.id)
         let ntype = parseInt(this.state.type)
-        
+        //Patch new restaurant info
         RestaurantService.updateRestaurant(this.state.name,this.state.adress,this.state.phone,ntype,r_id)
         .then(this.props.history.push('/'))
     }
@@ -124,7 +128,7 @@ export default class RestaurantCreation extends Component {
     </form>
         
       </section>
-    );
+    )
   }
 }
 

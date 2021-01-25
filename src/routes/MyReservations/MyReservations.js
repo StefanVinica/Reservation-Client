@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import RestaurantService from '../../services/restaurant-service'
-import { format } from "date-fns";
+import { format } from "date-fns"
 
 
 export default class MyReservations extends Component {
@@ -10,6 +10,8 @@ export default class MyReservations extends Component {
     }
 
     componentDidMount(){
+        //Get all reservations based on who is logged in
+        //
         RestaurantService.myReseservations()
         .then(reservations =>{
             this.setState({
@@ -19,14 +21,8 @@ export default class MyReservations extends Component {
     }
 
     componentDidUpdate(){
-       if(this.state.reservations.length === 0){
-            RestaurantService.myReseservations()
-            .then(reservations =>{
-                this.setState({
-                 reservations
-              })
-           })   
-        }
+    //Keep updating reservations
+    //
         RestaurantService.myReseservations()
         .then(reservations=>{
             if(reservations.length>this.state.reservations.length){
@@ -37,6 +33,8 @@ export default class MyReservations extends Component {
         })
     }
 
+    //Convert time zones
+    //
     fixTimeZone(utc_date){
         const offset = new Date().getTimezoneOffset()
         const date = new Date(utc_date)
@@ -44,11 +42,13 @@ export default class MyReservations extends Component {
         return newDate
     }
 
+
     redirect = () => {
         const { history } = this.props
         history.push('/userDashboard')        
     }
-
+    //Delete reservation and update
+    //
     handleDelete = e => {
        RestaurantService.deleteres(parseInt(e))
         RestaurantService.myReseservations()
