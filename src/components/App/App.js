@@ -12,6 +12,7 @@ import Redirect from '../../routes/Redirect'
 import UserDashboard from '../../routes/UserDashboardRoute/UserDashboard'
 import MyReservations from '../../routes/MyReservations/MyReservations'
 import EditTables from '../../routes/EditTables/EditTables'
+import LandingPage from '../../routes/LandingPage/LandingPage'
 import './App.css'
 
 export default class App extends Component {
@@ -64,6 +65,10 @@ export default class App extends Component {
             <PublicOnlyRoute
               path={'/login'}
               component={LoginRoute}
+            />
+            <PublicOnlyRoute
+              path={'/landing'}
+              component={LandingPage}
             />
             <Route
               component={NotFoundRoute}

@@ -133,3 +133,12 @@
     .red{
         color: red;
     }
+    img{
+        width: 350px;
+    }
+    .cont{
+        display: flex;
+    }
+    .text{
+        margin-left: 25px;
+    }
