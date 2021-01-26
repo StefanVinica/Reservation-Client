@@ -14,8 +14,8 @@ export default class LandingPage extends Component {
             <div className='boxbody'>
             <h2>How to get Started!</h2>
             <ol>
-            <p><li>If you have a restaurant create a Admin account</li></p>
-            <p><li>If you want to use the app to make reservations create a User account</li></p>
+            <p><li>This app lets you make reservations and keep track of them as a regular user</li></p>
+            <p><li>As a Admin/Restaurant owner this app helps you with the managment of reservations</li></p>
             </ol>
             </div>
 

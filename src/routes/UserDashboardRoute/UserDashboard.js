@@ -122,7 +122,7 @@ export default class UserDashboard extends Component {
         })
 
         return (
-            <section className='box'>
+            <section className='box user'>
                 <h2>Find a reservation</h2>
                 
                 <form>
@@ -171,7 +171,7 @@ export default class UserDashboard extends Component {
               </Input>
               <div className='btn-div'>
               <Button onClick={this.handleSearch}>
-                Find Avilable Tables
+              Find Available Tables
               </Button>
               </div>  
               </div>           

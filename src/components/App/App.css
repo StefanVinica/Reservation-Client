@@ -96,6 +96,7 @@
     }
     .login{
         margin: 10px;
+
     }
     .flex{
         display:flex;
@@ -141,4 +142,7 @@
     }
     .text{
         margin-left: 25px;
+    }
+    .user{
+        margin-top: 20px;
     }
