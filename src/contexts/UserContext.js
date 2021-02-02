@@ -11,6 +11,7 @@ const UserContext = React.createContext({
   setUser: () => {},
   processLogin: () => {},
   processLogout: () => {},
+  setId: () => {},
 })
 
 export default UserContext
@@ -18,7 +19,7 @@ export default UserContext
 export class UserProvider extends Component {
   constructor(props) {
     super(props)
-    const state = { user: {}, error: null }
+    const state = { user: {}, error: null, r_id:0 }
 
     const jwtPayload = TokenService.parseAuthToken()
 
@@ -28,6 +29,7 @@ export class UserProvider extends Component {
         name: jwtPayload.name,
         username: jwtPayload.sub,
       }
+      
 
     this.state = state
     IdleService.setIdleCallback(this.logoutBecauseIdle)
@@ -72,6 +74,7 @@ export class UserProvider extends Component {
     TokenService.queueCallbackBeforeExpiry(() => {
       this.fetchRefreshToken()
     })
+
   }
 
   processLogout = () => {
@@ -105,6 +108,7 @@ export class UserProvider extends Component {
     const value = {
       user: this.state.user,
       error: this.state.error,
+      id: this.state.r_id,
       setError: this.setError,
       clearError: this.clearError,
       setUser: this.setUser,

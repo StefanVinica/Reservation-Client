@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import RestaurantService from '../../services/restaurant-service'
 import { format } from "date-fns"
+import {Button} from 'react-bootstrap'
 
 export default class DashboardRoute extends Component {
   state = {
@@ -95,7 +96,7 @@ export default class DashboardRoute extends Component {
   render() {
     const reservations = this.state.reservations
     const allreservations = reservations.map((res, index) => {
-      return <div key={index} className='box'>
+      return <div key={index} className='box tables'>
         <div className='boxheader'>
           <h3 className='boxtitle'>{res.name} - Table:{res.t_name}</h3>
         </div>
@@ -105,20 +106,14 @@ export default class DashboardRoute extends Component {
           <p>To:{format(new Date(this.fixTimeZone(res.res_to)), 'MM/dd/yyyy  hh:mm:ss a')}</p>
         </div>
         <div className='boxfooter'>
-          <button value={res.id} onClick={e => this.handleDelete(e.target.value)}>Reservation Complete</button>
+          <Button value={res.id} onClick={e => this.handleDelete(e.target.value)}>Reservation Complete</Button>
         </div>
       </div>
     })
     return (
       <section>
-        <div className='boxheader'>
-          <h2>{this.state.info.r_name}</h2>
-        </div>
-        <div className='boxbody'>
-        <button onClick={this.redirect} className='btn'>View All Tables</button>
-        </div>
-        <div className='container'>
-          <h2>All reservations</h2>
+        <h2>All reservations</h2>
+        <div className='alltables'>
           {allreservations}
         </div>
 

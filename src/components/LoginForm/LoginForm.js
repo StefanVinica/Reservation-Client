@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Input, Label } from '../Form/Form'
 import AuthApiService from '../../services/auth-api-service'
 import UserContext from '../../contexts/UserContext'
-import Button from '../Button/Button'
+import Button from 'react-bootstrap/Button'
 import './Login.css'
 
 class LoginForm extends Component {

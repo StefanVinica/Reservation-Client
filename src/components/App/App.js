@@ -13,6 +13,7 @@ import UserDashboard from '../../routes/UserDashboardRoute/UserDashboard'
 import MyReservations from '../../routes/MyReservations/MyReservations'
 import EditTables from '../../routes/EditTables/EditTables'
 import LandingPage from '../../routes/LandingPage/LandingPage'
+import EditTable from '../../routes/EditTableRoute/EditTable'
 import './App.css'
 
 export default class App extends Component {
@@ -38,6 +39,10 @@ export default class App extends Component {
               path={'/'}
               component={DashboardRoute}
             />
+            <PrivateRoute
+              path={'/edittable/:id'}
+              component={EditTable}
+            />            
             <PrivateRoute
               path={'/redirect'}
               component={Redirect}

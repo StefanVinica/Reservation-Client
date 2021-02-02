@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import RestaurantService from '../../services/restaurant-service'
 import { format } from "date-fns"
+import {Button} from 'react-bootstrap'
 
 
 export default class MyReservations extends Component {
@@ -74,12 +75,11 @@ export default class MyReservations extends Component {
                     <h4>Reservation From: {format(new Date(this.fixTimeZone(rez.res_from)), 'MM/dd/yyyy  hh:mm:ss a')}</h4>
                 </div>
                 <div className='boxfooter'>
-                    <button 
-                    className='btn' 
+                    <Button 
                     value={rez.id}
                     onClick={e => this.handleDelete(e.target.value)}
                     >Cancel
-                    </button>
+                    </Button>
                 </div>
             </div>
         })
